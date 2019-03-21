@@ -1,62 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <style type="text/css">
-        .del{
-            text-decoration: line-through;
-            color:#ccc;
-        }
-        [v-cloak]{
-            display: none;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <script src="./js/echarts.min.js"></script>
 </head>
-<body>
-<div id="app">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-                    todoList
-                </a>
-            </div>
-        </div>
-    </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-warning">
-                    <div class="panel-heading text-danger">
-                        <h3 class="text-danger">亲~，^_^你有{{count}}件事要完成</h3>
-                        <input type="text" class="form-control" @keyup.enter="add" v-model="title">
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-group">
-                            <li class="list-group-item" v-cloak v-for="todo in filterTodo" @dblclick="remember(todo)">
-                                <span :class="{del:todo.isSelected}" v-show="cur!==todo">
-                                    <input type="checkbox" v-model="todo.isSelected">
-                                    {{todo.title}}
-                                </span>
-                                <input type="text" v-model="todo.title" v-show="cur===todo" @keyup.enter="cancel" @blur="cancel" v-focus>
-                                <button class="btn btn-danger pull-right btn-xs" @click="remove(todo)">&bigotimes;</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="panel-footer">
-                        <ul class="nav nav-pills">
-                            <li role="presentation" :class="{active:hash==='#all'}"><a href="#all">全部任务</a></li>
-                            <li role="presentation"  :class="{active:hash==='#finish'}"><a href="#finish">已完成</a></li>
-                            <li role="presentation"  :class="{active:hash==='#unfinish'}"><a href="#unfinish">未完成</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-<script type="text/javascript" src="index.js"></script></body>
+<body id="Body_a">
+    <div id="main" style="width: 1200px;height:400px;"></div>
+</body>
+<script>
+var timeData,HPData,LPData;
+timeData=['2月23日','2月24日','2月25日','2月26日','2月27日','2月28日','3月1日','3月2日','3月3日','3月4日','3月5日','3月6日','3月7日','3月8日','3月9日','3月10日','3月11日','3月12日','3月13日','3月14日','3月15日','3月16日','3月17日','3月18日','3月19日','3月20日','3月21日','3月22日'
+],
+HPData=[144,150,160,140,138,143,142,135,130,135,124,116,134,147,138,140,135,143,115,137,120,138,140,141,135,142,145
+],
+LPData=[92,100,100,95,88,95,95,95,93,88,85,85,91,91,85,91,90,85,75,80,85,85,85,85,80,92,88]
+var myChart = echarts.init(document.getElementById('main'));
+var option = {
+    title: {
+        text: '董凯凯'
+    },
+    tooltip: {},
+    legend: {
+        data:['高压',"低压"]
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: timeData,
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'低压',
+            type:'line',
+            data:LPData
+        },
+        {
+            name:'高压',
+            type:'line',
+            data:HPData
+        },
+       
+    ]
+};
+
+myChart.setOption(option);
+</script>
 </html>
